@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELACORE OS: Exoskeleton to Neurons - Deep Tissue Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           GRAND BIO-DIGITAL DESIGN SYSTEM v4.0
+           Deep Tissue Architecture & Visual Language
+           ========================================= */
+        :root {
+            --bg-void: #02030a;
+            --bg-deep: #05061a;
+            --bg-page: #080a1f;
+            --bg-card: #0d1029;
+            --bg-elevated: #12153a;
+            --bg-code: #0a0c20;
+            --text-primary: #e8ecf4;
+            --text-secondary: #96a2b8;
+            --text-muted: #4a5670;
+            --text-dim: #2a3348;
+            --accent-cyan: #00e5ff;
+            --accent-purple: #b24bf3;
+            --accent-pink: #ff2d75;
+            --accent-green: #00e676;
+            --accent-amber: #ffab00;
+            --accent-red: #ff1744;
+            --accent-blue: #2979ff;
+            --vein-color: rgba(255, 45, 117, 0.4);
+            --bone-color: rgba(226, 232, 240, 0.8);
+            --neuron-color: rgba(0, 229, 255, 0.8);
+            --flesh-color: rgba(178, 75, 243, 0.15);
+            --font-body: 'Merriweather', Georgia, serif;
+            --font-heading: 'Inter', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            --sidebar-width: 340px;
+            --page-padding: 70px;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-purple) var(--bg-void);
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.9;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-void); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-purple); border-radius: 3px; }
+        ::selection { background: rgba(178, 75, 243, 0.3); color: #fff; }
+
+        /* --- MASTER LAYOUT ARCHITECTURE --- */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: rgba(5, 6, 26, 0.98);
+            backdrop-filter: blur(30px) saturate(180%);
+            border-right: 1px solid rgba(255,255,255,0.04);
+            padding: 50px 25px;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .sidebar-header {
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 30px;
+        }
+
+        .sidebar-logo {
+            font-family: var(--font-heading);
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            letter-spacing: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        .sidebar-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .toc-list { list-style: none; }
+
+        .toc-part-title {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            padding: 30px 15px 10px;
+            font-weight: 700;
+            font-family: var(--font-heading);
+            border-top: 1px solid rgba(255,255,255,0.03);
+            margin-top: 10px;
+        }
+
+        .toc-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 0.78rem;
+            font-weight: 400;
+            border-left: 2px solid transparent;
+            transition: all 0.3s var(--transition-smooth);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .toc-link:hover {
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.02);
+            border-left-color: var(--accent-purple);
+            transform: translateX(2px);
+        }
+
+        .toc-link.active {
+            color: var(--accent-cyan);
+            border-left-color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.03);
+            font-weight: 600;
+        }
+
+        .toc-link-num {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            min-width: 20px;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            max-width: 980px;
+            margin-right: auto;
+            padding: 0 var(--page-padding) 150px var(--page-padding);
+        }
+
+        /* --- BOOK PAGE ANATOMY & TYPOGRAPHY --- */
+        .book-page {
+            padding: 120px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .book-page.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .chapter-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .chapter-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 500;
+        }
+
+        .chapter-divider {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-pink), transparent);
+            opacity: 0.3;
+        }
+
+        .chapter-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #7a8599 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .chapter-excerpt {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 50px;
+            max-width: 600px;
+            line-height: 1.6;
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 20px;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-family: var(--font-heading);
+            font-size: 5rem;
+            line-height: 0.75;
+            padding-right: 15px;
+            padding-top: 8px;
+            color: var(--accent-pink);
+            font-weight: 900;
+        }
+
+        p {
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        .highlight { color: var(--accent-cyan); font-weight: 700; -webkit-text-fill-color: var(--accent-cyan); }
+        .highlight-red { color: var(--accent-pink); font-weight: 700; -webkit-text-fill-color: var(--accent-pink); }
+        .highlight-green { color: var(--accent-green); font-weight: 700; -webkit-text-fill-color: var(--accent-green); }
+        .highlight-purple { color: var(--accent-purple); font-weight: 700; -webkit-text-fill-color: var(--accent-purple); }
+        .highlight-amber { color: var(--accent-amber); font-weight: 700; -webkit-text-fill-color: var(--accent-amber); }
+
+        /* --- BIO-MAPPING ANATOMY TABLES --- */
+        .anatomy-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 50px 0;
+            font-family: var(--font-heading);
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .anatomy-table thead th {
+            background: rgba(0, 229, 255, 0.03);
+            color: var(--accent-cyan);
+            padding: 18px 20px;
+            text-align: left;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+            font-weight: 700;
+        }
+
+        .anatomy-table tbody td {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        .anatomy-table tbody tr:last-child td { border-bottom: none; }
+        .anatomy-table tbody tr { transition: background 0.3s ease; }
+        .anatomy-table tbody tr:hover { background: rgba(255,255,255,0.01); }
+
+        .bio-term {
+            color: var(--accent-pink);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .tech-term {
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: rgba(0, 229, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        /* --- INTERACTIVE CANVASES --- */
+        .viz-container {
+            width: 100%;
+            height: 400px;
+            background: var(--bg-deep);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            position: relative;
+            margin: 50px 0;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .viz-container canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .viz-label {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .viz-label-left {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--accent-purple);
+            letter-spacing: 1px;
+        }
+
+        /* --- COMPLEX CODE BLOCKS --- */
+        .code-block {
+            background: var(--bg-code);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            margin: 40px 0;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .code-header {
+            background: rgba(255,255,255,0.02);
+            padding: 12px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-dots { display: flex; gap: 7px; }
+        .code-dots span { width: 11px; height: 11px; border-radius: 50%; }
+        .code-dots span:nth-child(1) { background: #ff5f57; }
+        .code-dots span:nth-child(2) { background: #febc2e; }
+        .code-dots span:nth-child(3) { background: #28c840; }
+
+        .code-filename {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .code-body {
+            padding: 25px;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            line-height: 1.8;
+            color: #b4c0d4;
+            counter-reset: line;
+        }
+
+        .code-body .line {
+            display: block;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .code-body .line::before {
+            counter-increment: line;
+            content: counter(line);
+            position: absolute;
+            left: 0;
+            width: 30px;
+            text-align: right;
+            color: var(--text-dim);
+            font-size: 0.7rem;
+        }
+
+        .ck { color: #c678dd; }
+        .cf { color: #61afef; }
+        .cs { color: #98c379; }
+        .cc { color: #5c6370; font-style: italic; }
+        .cv { color: #e5c07b; }
+        .ct { color: #e06c75; }
+        .cn { color: #d19a66; }
+
+        /* --- TISSUE LAYOUT GRIDS --- */
+        .tissue-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .tissue-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--transition-bounce);
+        }
+
+        .tissue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-purple);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .tissue-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(178, 75, 243, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .tissue-card:hover::before { opacity: 1; }
+
+        .tissue-card h4 {
+            font-family: var(--font-heading);
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tissue-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .tech-stack-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-cyan { background: rgba(0, 229, 255, 0.1); color: var(--accent-cyan); border: 1px solid rgba(0, 229, 255, 0.2); }
+        .tag-purple { background: rgba(178, 75, 243, 0.1); color: var(--accent-purple); border: 1px solid rgba(178, 75, 243, 0.2); }
+        .tag-pink { background: rgba(255, 45, 117, 0.1); color: var(--accent-pink); border: 1px solid rgba(255, 45, 117, 0.2); }
+        .tag-green { background: rgba(0, 230, 118, 0.1); color: var(--accent-green); border: 1px solid rgba(0, 230, 118, 0.2); }
+        .tag-amber { background: rgba(255, 171, 0, 0.1); color: var(--accent-amber); border: 1px solid rgba(255, 171, 0, 0.2); }
+        .tag-red { background: rgba(255, 23, 68, 0.1); color: var(--accent-red); border: 1px solid rgba(255, 23, 68, 0.2); }
+
+        /* --- SYSTEM DIAGRAMS (CSS PIPES) --- */
+        .system-pipe-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 60px 0;
+            position: relative;
+            padding: 0 30px;
+        }
+
+        .system-pipe-diagram::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            right: 60px;
+            height: 3px;
+            background: rgba(255, 45, 117, 0.15);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .pipe-node {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.4s var(--transition-bounce);
+            cursor: default;
+        }
+
+        .pipe-node:hover {
+            transform: scale(1.15);
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 30px rgba(255, 45, 117, 0.2);
+        }
+
+        .pipe-node-icon { font-size: 1.8rem; margin-bottom: 8px; }
+        .pipe-node-label { font-family: var(--font-heading); font-size: 0.65rem; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; }
+        .pipe-node-sub { font-size: 0.6rem; color: var(--accent-cyan); margin-top: 4px; font-family: var(--font-mono); }
+
+        .pipe-flow-layer {
+            position: absolute;
+            top: 50%;
+            left: 60px;
+            right: 60px;
+            height: 3px;
+            transform: translateY(-50%);
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .flow-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            top: -2.5px;
+            box-shadow: 0 0 12px var(--accent-pink);
+            animation: flowRight 3s linear infinite;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(0, 229, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+        }
+
+        @keyframes flowRight {
+            0% { left: -2%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 102%; opacity: 0; }
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 0 25px 80px 25px; }
+            .chapter-title { font-size: 2.4rem; }
+            .tissue-grid { grid-template-columns: 1fr; }
+            .system-pipe-diagram { flex-direction: column; gap: 30px; }
+            .system-pipe-diagram::before, .pipe-flow-layer { display: none; }
+            .mobile-toggle { display: flex !important; }
+        }
+
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 2000;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        @media print {
+            .sidebar, .mobile-toggle, .viz-container { display: none !important; }
+            .main-content { margin: 0; padding: 0; max-width: 100%; }
+            .book-page { page-break-after: always; opacity: 1; transform: none; padding: 40px 0; }
+            body { background: #fff; color: #000; }
+            .chapter-title, .highlight, .highlight-red, .highlight-green, .highlight-purple, .highlight-amber { -webkit-text-fill-color: #000; }
+            p { color: #333; }
+            .anatomy-table, .tissue-card, .code-block { box-shadow: none; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="mobile-toggle" id="mobileToggle">☰</button>
+
+    <div class="app-container">
+        <!-- MEGA SIDEBAR NAVIGATION -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">HELACORE</div>
+                <div class="sidebar-subtitle">Deep Tissue Architecture v4.0</div>
+            </div>
+            <ul class="toc-list">
+                <li class="toc-part-title">Layer I: Armor & Structure</li>
+                <li class="toc-item"><a href="#ch1" class="toc-link active"><span class="toc-link-num">01</span>The Exoskeleton</a></li>
+                <li class="toc-item"><a href="#ch2" class="toc-link"><span class="toc-link-num">02</span>The Endoskeleton</a></li>
+                <li class="toc-item"><a href="#ch3" class="toc-link"><span class="toc-link-num">03</span>The Musculature</a></li>
+                
+                <li class="toc-part-title">Layer II: Flesh & Fluids</li>
+                <li class="toc-item"><a href="#ch4" class="toc-link"><span class="toc-link-num">04</span>The Flesh & Tissues</a></li>
+                <li class="toc-item"><a href="#ch5" class="toc-link"><span class="toc-link-num">05</span>The Circulatory System</a></li>
+                <li class="toc-item"><a href="#ch6" class="toc-link"><span class="toc-link-num">06</span>The Digestive Tract</a></li>
+
+                <li class="toc-part-title">Layer III: Microbiology</li>
+                <li class="toc-item"><a href="#ch7" class="toc-link"><span class="toc-link-num">07</span>The Cells & Mitochondria</a></li>
+                <li class="toc-item"><a href="#ch8" class="toc-link"><span class="toc-link-num">08</span>The Immune Response</a></li>
+                <li class="toc-item"><a href="#ch9" class="toc-link"><span class="toc-link-num">09</span>The Endocrine System</a></li>
+
+                <li class="toc-part-title">Layer IV: Neurology</li>
+                <li class="toc-item"><a href="#ch10" class="toc-link"><span class="toc-link-num">10</span>The Autonomic N.S.</a></li>
+                <li class="toc-item"><a href="#ch11" class="toc-link"><span class="toc-link-num">11</span>The Neurons & Synapses</a></li>
+                <li class="toc-item"><a href="#ch12" class="toc-link"><span class="toc-link-num">12</span>The Prefrontal Cortex</a></li>
+            </ul>
+        </nav>
+
+        <!-- MAIN BOOK CONTENT AREA -->
+        <main class="main-content">
+            
+            <!-- CHAPTER 1: THE EXOSKELETON -->
+            <section class="book-page" id="ch1">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 01 — Armor & Structure</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Exoskeleton</h2>
+                <div class="chapter-excerpt">
+                    Insects wear their armor on the outside. For Helacore OS, the Exoskeleton is the first line of defense—the hardened, chitinous shell that absorbs the blunt force of the internet before internal organs even notice an attack.
+                </div>
+                <p class="drop-cap">Before a digital signal reaches the soft, reasoning neural tissue of the KEE™ Engine, it must pass through the Exoskeleton. In nature, an exoskeleton provides structural support and protection against physical damage and dehydration. In our digital biology, this maps to the global Edge Network, Content Delivery Network (CDN), and Web Application Firewall (WAF). This is the chitin of Helacore OS.</p>
+                <p>The <span class="highlight-red">Cloudflare/AWS Shield</span> layer acts as the hardened outer shell. It sits at the very edge of the internet, intercepting millions of requests per second. Just as an insect's shell prevents desiccation, our Exoskeleton prevents "resource dehydration"—absorbing Distributed Denial of Service (DDoS) attacks that would otherwise drain the system's internal fluids (bandwidth and compute capacity). Malicious packets—pathogens, SQL injection attempts, cross-site scripting—are dissolved in the acidic enzymes of the WAF rules before they can penetrate the shell.</p>
+                
+                <div class="viz-container">
+                    <canvas id="exoskeletonViz"></canvas>
+                    <div class="viz-label-left">CHITIN MATRIX ACTIVE</div>
+                    <div class="viz-label">EXOSKELETON DEFENSE GRID (CLICK TO IMPACT)</div>
+                </div>
+
+                <table class="anatomy-table">
+                    <thead>
+                        <tr>
+                            <th width="20%">Biological Component</th>
+                            <th width="35%">Biological Function</th>
+                            <th width="45%">Helacore OS Exoskeleton Tech</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="bio-term">Chitin Layer</span></td>
+                            <td>Hard outer shell providing rigid structural defense against blunt force.</td>
+                            <td><span class="tech-term">Cloudflare WAF</span> / <span class="tech-term">AWS Shield Advanced</span><br>Filters layer 3/4/7 attacks via behavioral heuristics.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="bio-term">Sensory Setae</span></td>
+                            <td>Hairs on the exoskeleton detecting air movement and chemical signals.</td>
+                            <td><span class="tech-term">Edge Analytics & Bot Management</span><br>Detects anomalous traffic patterns and malicious fingerprints.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="bio-term">Spiracles</span></td>
+                            <td>Openings in the exoskeleton that strictly regulate gas exchange.</td>
+                            <td><span class="tech-term">API Rate Limiting & Throttling</span><br>Strict regulation of data ingress to prevent internal suffocation.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- CHAPTER 2: THE ENDOSKELETON -->
+            <section class="book-page" id="ch2">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 02 — Armor & Structure</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Endoskeleton</h2>
+                <div class="chapter-excerpt">
+                    Beneath the shell lies the internal skeleton. Vertebrates grow bones inside their bodies to protect vital organs and anchor muscles. This is the unyielding infrastructure upon which the organism moves.
+                </div>
+                <p class="drop-cap">While the Exoskeleton fends off the chaos of the external world, the <span class="highlight">Endoskeleton</span> defines the internal architecture. You cannot have complex thought without a rigid framework to hold the brain. In Helacore, the Endoskeleton is <span class="highlight-purple">Kubernetes (K8s)</span> and <span class="highlight-purple">Terraform</span>. It is the calcium phosphate matrix of our system.</p>
+                <p>Bones provide attachment points for muscles. In our architecture, Kubernetes Namespaces and Node Pools provide the rigid structure upon which Docker containers (muscles) attach. If a bone breaks, the organism is paralyzed. Therefore, we define this skeleton using Infrastructure as Code (Terraform). The DNA of our infrastructure is written in HCL (HashiCorp Configuration Language), ensuring that the skeletal structure grows identically in development, staging, and production environments. There is no "worked on my machine" in biology; the DNA dictates the skeleton perfectly.</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <div class="code-filename">infrastructure/endoskeleton.tf</div>
+                    </div>
+                    <pre class="code-body"><span class="line"><span class="cc"># Defining the internal bone marrow and structural nodes</span></span>
+<span class="line"><span class="ck">resource</span> <span class="cs">"aws_eks_cluster"</span> <span class="cv">"helacore_spine"</span> {</span>
+<span class="line">  name     = <span class="cs">"helacore-internal-skeleton"</span></span>
+<span class="line">  role_arn = aws_iam_role.spine_role.arn</span>
+<span class="line">  </span>
+<span class="line">  vpc_config {</span>
+<span class="line">    subnet_ids = [</span>
+<span class="line">      aws_subnet.cervical_node.id,</span>
+<span class="line">      aws_subnet.lumbar_node.id,</span>
+<span class="line">      aws_subnet.sacral_node.id</span>
+<span class="line">    ]</span>
+<span class="line">  }</span>
+<span class="line">}</span></pre>
+                </div>
+            </section>
+
+            <!-- CHAPTER 3: THE MUSCULATURE -->
+            <section class="book-page" id="ch3">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 03 — Armor & Structure</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Musculature</h2>
+                <div class="chapter-excerpt">
+                    Skeletons cannot move without muscles. The muscular system converts chemical potential energy into kinetic mechanical force, allowing the organism to interact with its environment.
+                </div>
+                <p class="drop-cap">A skeleton without muscles is paralyzed. Helacore OS uses <span class="highlight-green">Go (Golang) microservices</span> and <span class="highlight-green">Docker containers</span> as its muscle fibers. Muscles are organized into fascicles—bundles of fibers that contract together to exert force. Our microservices are organized identically via Kubernetes Deployments.</p>
+                <p>Why Go? In the biological world, there are fast-twitch muscle fibers (for sudden bursts of speed) and slow-twitch fibers (for endurance). Interpreted languages like Python or Ruby are slow-twitch fibers—great for background, long-running data processing, but terrible for sudden, high-concurrency bursts. Go compiles to machine code, acting as a fast-twitch fiber. It can handle thousands of concurrent connections (lifting heavy objects) with incredibly low memory overhead, making it the perfect tissue for our real-time data ingestion layers.</p>
+                
+                <div class="tissue-grid">
+                    <div class="tissue-card">
+                        <h4>💪 Fast-Twitch Fibers</h4>
+                        <p>Handle immediate, high-concurrency reactive loads. API gateways, Kafka producers, real-time websockets.</p>
+                        <div class="tech-stack-tags">
+                            <span class="tech-tag tag-cyan">Golang</span>
+                            <span class="tech-tag tag-green">Goroutines</span>
+                            <span class="tech-tag tag-purple">K8s HPA</span>
+                        </div>
+                    </div>
+                    <div class="tissue-card">
+                        <h4>🧘 Slow-Twitch Fibers</h4>
+                        <p>Handle sustained, background processing. AI model training, nightly batch ETL, complex graph calculations.</p>
+                        <div class="tech-stack-tags">
+                            <span class="tech-tag tag-purple">Python</span>
+                            <span class="tech-tag tag-amber">PyTorch</span>
+                            <span class="tech-tag tag-pink">Celery</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 4: THE FLESH & TISSUES -->
+            <section class="book-page" id="ch4">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 04 — Flesh & Fluids</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Flesh & Connective Tissues</h2>
+                <div class="chapter-excerpt">
+                    Between the muscles and the bones lies a complex matrix of flesh, fat, and connective tissues. This is the substance of the organism. It holds the organs in place and facilitates smooth internal friction.
+                </div>
+                <p class="drop-cap">If Kubernetes is the bone and Go is the muscle, then the <span class="highlight-purple">Service Mesh (Istio/Linkerd)</span>, <span class="highlight-purple">API Gateways (Kong)</span>, and <span class="highlight-purple">GraphQL</span> are the flesh and connective tissues. They bind the discrete muscular microservices together into a cohesive, sliding, functioning whole.</p>
+                <p>In a body, ligaments connect bone to bone, and tendons connect muscle to bone. In Helacore, the Istio Service Mesh acts as the tendons. It injects sidecar proxies (Pods) next to every muscle (microservice). These proxies handle the "friction" of internal communication: mutual TLS encryption (mTLS), circuit breaking (preventing a torn muscle from tearing the whole system), and distributed tracing. The flesh ensures that when the stomach (data ingestion) pushes food to the intestines (vector database), the connection is smooth, secure, and monitored.</p>
+
+                <div class="system-pipe-diagram">
+                    <div class="pipe-flow-layer"><div class="flow-particle" style="animation-delay: 0s;"></div><div class="flow-particle" style="animation-delay: 1s;"></div><div class="flow-particle" style="animation-delay: 2s;"></div></div>
+                    <div class="pipe-node"><div class="pipe-node-icon">🦴</div><div class="pipe-node-label">BONE</div><div class="pipe-node-sub">K8s Cluster</div></div>
+                    <div class="pipe-node"><div class="pipe-node-icon">🩹</div><div class="pipe-node-label">TENDON</div><div class="pipe-node-sub">Istio Mesh</div></div>
+                    <div class="pipe-node"><div class="pipe-node-icon">💪</div><div class="pipe-node-label">MUSCLE</div><div class="pipe-node-sub">Go Service</div></div>
+                    <div class="pipe-node"><div class="pipe-node-icon">🧬</div><div class="pipe-node-label">ORGAN</div><div class="pipe-node-sub">Postgres DB</div></div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 5: THE CIRCULATORY SYSTEM -->
+            <section class="book-page" id="ch5">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 05 — Flesh & Fluids</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Circulatory System</h2>
+                <div class="chapter-excerpt">
+                    The heart pumps blood through a vast network of arteries, veins, and capillaries. Blood is the universal transport medium, carrying oxygen, nutrients, hormones, and white blood cells to every cell in the body.
+                </div>
+                <p class="drop-cap">In Helacore OS, <span class="highlight-red">data is blood</span>, <span class="highlight-red">Apache Kafka is the heart</span>, and the network of topics and partitions are the arteries and veins. Traditional architectures use direct API calls—the equivalent of a body where organs physically pass hand-written notes to each other. This fails under stress. Helacore uses an event-driven architecture to sustain life.</p>
+                <p>When a user clicks "Save Invoice", the API Gateway doesn't write directly to the database. Instead, it publishes a "data cell" (a JSON or Avro message) into a Kafka topic (an artery). The Kafka cluster acts as the Heart, ensuring this data cell is pumped relentlessly forward. If the database is temporarily down (a blocked vein), the heart keeps pumping, storing the blood cells safely in the Kafka log until the blockage is cleared. No data is lost. The organism survives organ failure.</p>
+                
+                <div class="viz-container">
+                    <canvas id="circulatoryViz"></canvas>
+                    <div class="viz-label-left">HEART RATE: 120 BPM</div>
+                    <div class="viz-label">ARTERIAL BLOOD FLOW SIMULATION</div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 6: THE DIGESTIVE TRACT -->
+            <section class="book-page" id="ch6">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 06 — Flesh & Fluids</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Digestive Tract</h2>
+                <div class="chapter-excerpt">
+                    Consuming raw matter does not immediately fuel the body. Food must pass through a brutal, acidic journey where it is broken down into fundamental molecular nutrients. Useless waste is excreted.
+                </div>
+                <p class="drop-cap">Helacore OS consumes massive amounts of unstructured external data: 50-page PDF agricultural reports, messy CSVs of market prices, unstructured HTML from news sites. This raw data enters the <span class="highlight-amber">Esophagus (Data Ingestion API)</span>. It is pushed into the <span class="highlight-amber">Stomach (Text Chunking & Normalization)</span>, where large documents are dissolved into smaller, manageable text chunks by acidic regex algorithms.</p>
+                <p>It then reaches the <span class="highlight-amber">Small Intestine (Knowledge Compression Engine)</span>. Here, a sequence-to-sequence AI model (like FLAN-T5) acts as enzymes, extracting only the pure "Knowledge DNA"—summary, rules, and entities. This DNA is converted into Vector Embeddings (numeric representations of meaning) and absorbed into Weaviate (the bloodstream). The waste (useless formatting, boilerplate HTML) is excreted. Only pure, highly concentrated intelligence enters the Helacore circulatory system.</p>
+                
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <div class="code-filename">digestive_tract/compression_enzymes.py</div>
+                    </div>
+                    <pre class="code-body"><span class="line"><span class="ck">class</span> <span class="ct">DigestiveTract</span>:</span>
+<span class="line">  <span class="ck">def</span> <span class="cf">metabolize_raw_data</span>(<span class="cv">self</span>, raw_food: <span class="ct">str</span>) -> <span class="ct">KnowledgeDNA</span>:</span>
+<span class="line">    <span class="cc"># 1. Stomach: Apply acidic chunking to break down structure</span></span>
+<span class="line">    chunks = <span class="cv">self</span>.stomach_acid.<span class="cf">dissolve</span>(raw_food, max_chunk_size=<span class="cn">512</span>)</span>
+<span class="line">    </span>
+<span class="line">    pure_nutrients = []</span>
+<span class="line">    <span class="ck">for</span> chunk <span class="ck">in</span> chunks:</span>
+<span class="line">      <span class="cc"># 2. Small Intestine: Enzymes (T5 LLM) extract core meaning</span></span>
+<span class="line">      prompt = <span class="cs">f"Extract key entities, rules, and summary: {chunk}"</span></span>
+<span class="line">      nutrient_json = <span class="cv">self</span>.llm_enzyme.<span class="cf">generate</span>(prompt)</span>
+<span class="line">      </span>
+<span class="line">      <span class="cc"># 3. Absorption: Convert to Vector Embeddings for bloodstream</span></span>
+<span class="line">      vector = <span class="cv">self</span>.embedding_model.<span class="cf">encode</span>(nutrient_json)</span>
+<span class="line">      pure_nutrients.<span class="cf">append</span>({<span class="cs">"dna"</span>: nutrient_json, <span class="cs">"vector"</span>: vector})</span>
+<span class="line">      </span>
+<span class="line">    <span class="cc"># 4. Excrete waste, inject nutrients into Kafka bloodstream</span></span>
+<span class="line">    <span class="cv">self</span>.bloodstream.<span class="cf">ingest</span>(pure_nutrients)</span>
+<span class="line">    <span class="ck">return</span> KnowledgeDNA(status=<span class="cs">"metabolized"</span>)</span></pre>
+                </div>
+            </section>
+
+            <!-- CHAPTER 7: THE CELLS & MITOCHONDRIA -->
+            <section class="book-page" id="ch7">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 07 — Microbiology</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Cells & Mitochondria</h2>
+                <div class="chapter-excerpt">
+                    The cell is the fundamental structural and functional unit of life. Inside every cell are mitochondria—the powerhouses that generate the ATP (energy) required for all biological processes.
+                </div>
+                <p class="drop-cap">In Helacore OS, a <span class="highlight-green">Docker container</span> is a single cell. It is an isolated, self-contained unit of life that holds exactly one microservice, its specific runtime dependencies, and its localized environment variables. Just as a cell has a lipid bilayer membrane, a Docker container has a network namespace and filesystem isolation, preventing the internal chemistry of one cell from leaking into another.</p>
+                <p>Inside this cell lives the <span class="highlight-green">Mitochondria</span>—the CPU and RAM limits defined in the Kubernetes pod spec. Mitochondria synthesize ATP from glucose. In our system, the CPU synthesizes compute cycles from electrical power. If a cell is mutated (bad code deploy) or if its mitochondria fail (Out of Memory crash), Kubernetes detects the dead cell and immediately triggers <span class="highlight-green">Mitosis</span>—spinning up a genetically identical replacement cell to maintain tissue health.</p>
+                
+                <div class="viz-container">
+                    <canvas id="cellMitosisViz"></canvas>
+                    <div class="viz-label-left">MITOSIS SEQUENCE INITIATED</div>
+                    <div class="viz-label">CELLULAR DIVISION MONITOR</div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <div class="code-filename">cellular_biology/pod_mitosis.yaml</div>
+                    </div>
+                    <pre class="code-body"><span class="line"><span class="cc"># Defining the cellular wall and mitochondrial limits</span></span>
+<span class="line"><span class="ck">apiVersion</span>: v1</span>
+<span class="line"><span class="ck">kind</span>: Pod</span>
+<span class="line"><span class="ck">metadata</span>:</span>
+<span class="line">  <span class="ck">name</span>: <span class="cs">kee-brain-cell-abc123</span></span>
+<span class="line"><span class="ck">spec</span>:</span>
+<span class="line">  <span class="ck">containers</span>:</span>
+<span class="line">  - <span class="ck">name</span>: <span class="cs">brain-muscle</span></span>
+<span class="line">    <span class="ck">image</span>: <span class="cs">helacore/kee-cortex:v1.2.4</span></span>
+<span class="line">    <span class="ck">resources</span>:</span>
+<span class="line">      <span class="ck">limits</span>:</span>
+<span class="line">        <span class="cc"># Mitochondrial capacity limits</span></span>
+<span class="line">        <span class="ck">cpu</span>: <span class="cs">"2000m"</span> <span class="cc"># Max ATP synthesis</span></span>
+<span class="line">        <span class="ck">memory</span>: <span class="cs">"4Gi"</span>  <span class="cc"># Cellular fluid capacity</span></span></pre>
+                </div>
+            </section>
+
+            <!-- CHAPTER 8: THE IMMUNE RESPONSE -->
+            <section class="book-page" id="ch8">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 08 — Microbiology</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Immune Response</h2>
+                <div class="chapter-excerpt">
+                    A living system is constantly under siege by bacteria, viruses, and parasites. The immune system is a highly adaptive, multi-tiered defense network that distinguishes self from non-self with lethal precision.
+                </div>
+                <p class="drop-cap">Helacore OS employs a sophisticated digital immune response. The <span class="highlight-red">Innate Immune System</span> provides immediate, non-specific defense. If an IP address begins firing thousands of requests per second—a clear DDoS pathogen—the Kong Gateway acts as a macrophage, instantly吞噬ing (dropping) the malicious packets without requiring complex computation.</p>
+                <p>If a pathogen bypasses the innate system, the <span class="highlight-red">Adaptive Immune System</span> engages. HashiCorp Vault stores the antibodies—OAuth tokens, API keys, and encryption certificates. When a request enters a microservice, the service demands cellular identification via mTLS. If the requesting cell lacks the correct DNA marker (Role-Based Access Control permissions), it is systematically destroyed (returned 403 Forbidden). Furthermore, tools like Snyk act as T-cells in the CI/CD pipeline, scanning newly divided cells for known genetic mutations (CVE vulnerabilities) before they are allowed to join the organism.</p>
+                
+                <div class="tissue-grid">
+                    <div class="tissue-card">
+                        <h4>🛡️ Innate Immunity</h4>
+                        <p>Macrophages and Neutrophils. Immediate, non-specific defense. Drops DDoS packets, blocks obvious SQLi. No memory required.</p>
+                        <div class="tech-stack-tags"><span class="tech-tag tag-pink">AWS WAF</span><span class="tech-tag tag-pink">Kong Rate Limit</span></div>
+                    </div>
+                    <div class="tissue-card">
+                        <h4>🧬 Adaptive Immunity</h4>
+                        <p>T-Cells and B-Cells. Targeted defense. HashiCorp Vault issues mTLS certificates. RBAC checks DNA markers of every internal request.</p>
+                        <div class="tech-stack-tags"><span class="tech-tag tag-purple">Vault</span><span class="tech-tag tag-purple">mTLS</span><span class="tech-tag tag-purple">RBAC</span></div>
+                    </div>
+                    <div class="tissue-card">
+                        <h4>🔬 T-Cell Scanners</h4>
+                        <p>Scan dividing cells for genetic mutations. CI/CD pipelines run Snyk and Trivy against Docker images to prevent vulnerable code from becoming tissue.</p>
+                        <div class="tech-stack-tags"><span class="tech-tag tag-red">Snyk</span><span class="tech-tag tag-red">Trivy</span><span class="tech-tag tag-red">GitHub Actions</span></div>
+                    </div>
+                    <div class="tissue-card">
+                        <h4>🦠 Fever Response</h4>
+                        <p>When infection is detected, the body raises temperature to denature pathogens. System auto-scales and isolates infected subnets, burning compute to kill the threat.</p>
+                        <div class="tech-stack-tags"><span class="tech-tag tag-amber">K8s Network Policies</span><span class="tech-tag tag-amber">Isolation Pods</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 9: THE ENDOCRINE SYSTEM -->
+            <section class="book-page" id="ch9">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 09 — Microbiology</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Endocrine System</h2>
+                <div class="chapter-excerpt">
+                    The nervous system uses lightning-fast electrical spikes for immediate reactions. The endocrine system uses hormones—chemical messengers released into the blood to cause slow, widespread, systemic changes. It maintains long-term homeostasis.
+                </div>
+                <p class="drop-cap"><span class="highlight-amber">Prometheus, Grafana, and Kubernetes Horizontal Pod Autoscaler (HPA)</span> are the endocrine glands of Helacore OS. If the system experiences high CPU load (body temperature rising), Prometheus (the hypothalamus) detects this metric. It secretes a "hormone" (an alert) into the Kafka bloodstream.</p>
+                <p>This hormone travels globally, eventually reaching the Kubernetes pituitary gland (HPA), which triggers systemic scaling—growing new muscle fibers (pods) across the entire organism to cool the system down. This is Digital Homeostasis. The system self-regulates its temperature, blood pressure (I/O throughput), and cellular hydration (RAM usage) without conscious human intervention.</p>
+                <table class="anatomy-table">
+                    <thead><tr><th>Biological Gland</th><th>Hormone Function</th><th>Helacore Tech Equivalent</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="bio-term">Hypothalamus</span></td><td>Detects internal metrics and triggers pituitary.</td><td><span class="tech-term">Prometheus</span> - Scrapes metrics every 15 seconds.</td></tr>
+                        <tr><td><span class="bio-term">Pituitary Gland</span></td><td>Master gland that dictates systemic growth.</td><td><span class="tech-term">K8s HPA</span> - Scales pods based on Prometheus metrics.</td></tr>
+                        <tr><td><span class="bio-term">Thyroid</span></td><td>Regulates basal metabolic rate.</td><td><span class="tech-term">Resource Quotas</span> - Limits total compute per namespace.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- CHAPTER 10: THE AUTONOMIC NERVOUS SYSTEM -->
+            <section class="book-page" id="ch10">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 10 — Neurology</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Autonomic Nervous System</h2>
+                <div class="chapter-excerpt">
+                    You do not consciously tell your heart to beat, nor do you manually regulate your pupils dilation in response to light. The Autonomic Nervous System (ANS) controls these subconscious vital functions.
+                </div>
+                <p class="drop-cap">In Helacore, the ANS is composed of <span class="highlight">Redis</span> (reflexes) and <span class="highlight">Kubernetes HPA</span> (smooth muscle control). When a user requests their dashboard, the system should not query PostgreSQL. That is like using your conscious brain to pump blood.</p>
+                <p>Instead, the request hits Redis—the brainstem. Redis holds frequently accessed data (user profiles, session states) in raw RAM. This is a <span class="highlight">Reflex Arc</span>. The signal enters the spinal cord, triggers an immediate, unconscious response from Redis in sub-milliseconds, and returns before the cerebral cortex (PostgreSQL) is even aware it happened. This offloading of subconscious logic is what allows Helacore to remain lightning-fast under heavy cognitive load.</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <div class="code-filename">neurology/brainstem_reflex.go</div>
+                    </div>
+                    <pre class="code-body"><span class="line"><span class="ck">func</span> <span class="cf">ReflexArcHandler</span>(w http.ResponseWriter, r *http.Request) {</span>
+<span class="line">  userID := r.Header.<span class="cf">Get</span>(<span class="cs">"X-User-ID"</span>)</span>
+<span class="line">  </span>
+<span class="line">  <span class="cc">// Bypass conscious brain entirely (Sub-ms reflex)</span></span>
+<span class="line">  cachedProfile, err := RedisBrainstem.<span class="cf">Get</span>(ctx, <span class="cs">"profile:"</span>+userID).<span class="cf">Result</span>()</span>
+<span class="line">  <span class="ck">if</span> err == <span class="ck">nil</span> {</span>
+<span class="line">    json.<span class="cf">NewEncoder</span>(w).<span class="cf">Encode</span>(cachedProfile)</span>
+<span class="line">    <span class="ck">return</span></span>
+<span class="line">  }</span>
+<span class="line">  </span>
+<span class="line">  <span class="cc">// Cache miss: Signal escalates to conscious brain (Postgres)</span></span>
+<span class="line">  profile, err := PostgresCortex.<span class="cf">QueryUserProfile</span>(userID)</span>
+<span class="line">  <span class="ck">if</span> err != <span class="ck">nil</span> {</span>
+<span class="line">    http.<span class="cf">Error</span>(w, <span class="cs">"Cortex error"</span>, http.StatusInternalServerError)</span>
+<span class="line">    <span class="ck">return</span></span>
+<span class="line">  }</span>
+<span class="line">  </span>
+<span class="line">  <span class="cc">// Teach brainstem this reflex for future (Muscle memory)</span></span>
+<span class="line">  RedisBrainstem.<span class="cf">Set</span>(ctx, <span class="cs">"profile:"</span>+userID, profile, <span class="cn">10</span> * time.Minute)</span>
+<span class="line">  json.<span class="cf">NewEncoder</span>(w).<span class="cf">Encode</span>(profile)</span>
+<span class="line">}</span></pre>
+                </div>
+            </section>
+
+            <!-- CHAPTER 11: THE NEURONS & SYNAPSES -->
+            <section class="book-page" id="ch11">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 11 — Neurology</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Neurons & Synapses</h2>
+                <div class="chapter-excerpt">
+                    The brain is made of billions of neurons, connected by trillions of synapses. Neurons communicate via electrochemical spikes. When a neuron fires, it releases neurotransmitters across the synaptic cleft to the next cell.
+                </div>
+                <p class="drop-cap">In software architecture, a <span class="highlight-green">Domain Event</span> is a neurotransmitter. A <span class="highlight-green">Kafka Topic Partition</span> is the synaptic cleft. A <span class="highlight-green">Microservice</span> is the receiving neuron. Helacore does not use synchronous function calls between internal organs; it uses synaptic transmission.</p>
+                <p>When the "Invoice Creation" neuron fires, it releases a payload (neurotransmitter) into the "invoice.events" synaptic cleft (Kafka). The "Inventory Management" neuron and the "Accounting" neuron are subscribed to this cleft. They receive the spike, experience an action potential, and fire their own respective events. This decoupled, event-driven architecture is what allows the brain to process multiple thoughts simultaneously without blocking.</p>
+
+                <div class="viz-container">
+                    <canvas id="neuralSynapseViz"></canvas>
+                    <div class="viz-label-left">ACTION POTENTIAL DETECTED</div>
+                    <div class="viz-label">SYNAPTIC CLEFT TRANSMISSION</div>
+                </div>
+            </section>
+
+            <!-- CHAPTER 12: THE PREFRONTAL CORTEX -->
+            <section class="book-page" id="ch12">
+                <div class="chapter-meta">
+                    <span class="chapter-label">Chapter 12 — Neurology</span>
+                    <div class="chapter-divider"></div>
+                </div>
+                <h2 class="chapter-title">The Prefrontal Cortex</h2>
+                <div class="chapter-excerpt">
+                    At the apex of human evolution sits the Prefrontal Cortex—the seat of executive function, personality, reasoning, and long-term planning. It does not merely react to stimuli; it simulates the future.
+                </div>
+                <p class="drop-cap">The <span class="highlight-green">Helacore KEE™ Engine</span> is our digital Prefrontal Cortex. When a user asks: "Should I buy fertilizer now?", lower animals (basic AI) would simply look up the current price and say "Yes, it is cheap." The KEE™ Engine engages in executive function. It pauses. It triggers the <span class="highlight-green">Curiosity Engine</span> to realize it lacks weather data. It triggers the <span class="highlight-green">Truth Engine</span> to verify supplier reliability.</p>
+                <p>It queries the Graph Database to understand that if it rains next week, fertilizer prices will drop by 20%. It then synthesizes this multi-variable simulation and delivers a reasoned response: "Do not buy now. Supplier X has a 60% reliability score, and the KEE™ graph correlates incoming rainfall with a 20% price drop in 5 days. I have set an autonomous trigger to purchase from Supplier Y if the price drops below $X." This is not data retrieval. This is Digital Reasoning.</p>
+                
+                <p style="text-align: center; margin-top: 120px; font-family: var(--font-heading); font-size: 2rem; color: var(--text-dim); letter-spacing: 4px;">— END OF DEEP TISSUE MAPPING —</p>
+                <p style="text-align: center; font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-green); margin-top: 20px;">HELACORE OS: WHERE BIOLOGY MEETS TECHNOLOGY</p>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ==========================================
+         MASSIVE JAVASCRIPT ENGINE: BIOLOGY SIMS
+         ========================================== -->
+    <script>
+        /**
+         * HELACORE BIO-DIGITAL MASTER ENGINE v4.0
+         * Deep Tissue Architecture Controller
+         * Manages Physics, Canvas Rendering, and UI State
+         */
+
+        class HelacoreBioMaster {
+            constructor() {
+                this.canvasInstances = {};
+                this.isBooted = false;
+                this.init();
+            }
+
+            init() {
+                window.addEventListener('load', () => this.bootSequence());
+                window.addEventListener('scroll', () => this.handleScroll());
+            }
+
+            bootSequence() {
+                this.isBooted = true;
+                this.initScrollSpy();
+                this.initMobileUI();
+                this.initCanvases();
+                console.log('[HELACORE BIOS] Deep tissue mapping online. All systems nominal.');
+            }
+
+            initScrollSpy() {
+                const sections = document.querySelectorAll('.book-page');
+                const links = document.querySelectorAll('.toc-link');
+                
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.15
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            const id = entry.target.getAttribute('id');
+                            links.forEach(l => {
+                                l.classList.toggle('active', l.getAttribute('href') === `#${id}`);
+                            });
+                        }
+                    });
+                }, observerOptions);
+
+                sections.forEach(s => observer.observe(s));
+            }
+
+            handleScroll() {
+                // Reserved for future parallax or progress bar logic
+            }
+
+            initMobileUI() {
+                const btn = document.getElementById('mobileToggle');
+                const sidebar = document.getElementById('sidebar');
+                if (btn && sidebar) {
+                    btn.addEventListener('click', () => {
+                        const isOpen = sidebar.classList.toggle('open');
+                        btn.innerText = isOpen ? '✕' : '☰';
+                    });
+                }
+            }
+
+            initCanvases() {
+                // Initialize all biological visualizations
+                this.canvasInstances.exoskeleton = new ExoskeletonGrid('exoskeletonViz');
+                this.canvasInstances.circulatory = new CirculatoryFlow('circulatoryViz');
+                this.canvasInstances.mitosis = new CellMitosis('cellMitosisViz');
+                this.canvasInstances.synapse = new NeuralSynapse('neuralSynapseViz');
+                
+                // Start rendering loops
+                Object.values(this.canvasInstances).forEach(canvas => canvas.start());
+            }
+        }
+
+        /**
+         * 1. EXOSKELETON: Dynamic Wireframe Defense Grid
+         * Simulates a rigid mesh that deforms under kinetic impact and springs back.
+         */
+        class ExoskeletonGrid {
+            constructor(id) {
+                this.canvas = document.getElementById(id);
+                this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+                this.nodes = [];
+                this.impactWaves = [];
+                this.spacing = 40;
+            }
+
+            start() {
+                if (!this.ctx) return;
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.canvas.addEventListener('click', (e) => this.createImpact(e));
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+                this.generateGrid();
+            }
+
+            generateGrid() {
+                this.nodes = [];
+                const cols = Math.ceil(this.canvas.width / this.spacing);
+                const rows = Math.ceil(this.canvas.height / this.spacing);
+                for (let i = 0; i <= cols; i++) {
+                    for (let j = 0; j <= rows; j++) {
+                        this.nodes.push({
+                            x: i * this.spacing, 
+                            y: j * this.spacing,
+                            baseX: i * this.spacing, 
+                            baseY: j * this.spacing,
+                            radius: 1, 
+                            opacity: 0.2
+                        });
+                    }
+                }
+            }
+
+            createImpact(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                this.impactWaves.push({ 
+                    x: e.clientX - rect.left, 
+                    y: e.clientY - rect.top, 
+                    radius: 0, 
+                    maxRadius: 200, 
+                    opacity: 1 
+                });
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw Chitin Connections (Ligaments)
+                this.ctx.strokeStyle = 'rgba(0, 229, 255, 0.04)';
+                this.ctx.lineWidth = 1;
+                this.nodes.forEach(node => {
+                    const rightNode = this.nodes.find(n => n.baseX === node.baseX + this.spacing && n.baseY === node.baseY);
+                    const downNode = this.nodes.find(n => n.baseX === node.baseX && n.baseY === node.baseY + this.spacing);
+                    if(rightNode) {
+                        this.ctx.beginPath(); 
+                        this.ctx.moveTo(node.x, node.y); 
+                        this.ctx.lineTo(rightNode.x, rightNode.y); 
+                        this.ctx.stroke();
+                    }
+                    if(downNode) {
+                        this.ctx.beginPath(); 
+                        this.ctx.moveTo(node.x, node.y); 
+                        this.ctx.lineTo(downNode.x, downNode.y); 
+                        this.ctx.stroke();
+                    }
+                });
+
+                // Process Kinetic Impact Waves
+                this.impactWaves = this.impactWaves.filter(wave => {
+                    wave.radius += 5;
+                    wave.opacity = 1 - (wave.radius / wave.maxRadius);
+                    if (wave.opacity <= 0) return false;
+
+                    // Displace nodes based on wave front
+                    this.nodes.forEach(node => {
+                        const dx = node.baseX - wave.x;
+                        const dy = node.baseY - wave.y;
+                        const dist = Math.sqrt(dx*dx + dy*dy);
+                        
+                        // If node is on the edge of the wave front
+                        if (dist < wave.radius + 15 && dist > wave.radius - 15) {
+                            const force = (1 - Math.abs(dist - wave.radius) / 15) * 8;
+                            const angle = Math.atan2(dy, dx);
+                            node.x = node.baseX + Math.cos(angle) * force;
+                            node.y = node.baseY + Math.sin(angle) * force;
+                            node.opacity = 0.9;
+                        }
+                    });
+                    return true;
+                });
+
+                // Draw and apply Spring Physics to return to base state
+                this.nodes.forEach(node => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(0, 229, 255, ${node.opacity})`;
+                    this.ctx.fill();
+                    
+                    // Spring back to origin (Homeostasis)
+                    node.x += (node.baseX - node.x) * 0.1; 
+                    node.y += (node.baseY - node.y) * 0.1;
+                    node.opacity += (0.2 - node.opacity) * 0.05;
+                });
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        /**
+         * 2. CIRCULATORY SYSTEM: Bezier Curve Blood Flow
+         * Simulates red/white blood cells flowing through arterial pathways.
+         */
+        class CirculatoryFlow {
+            constructor(id) {
+                this.canvas = document.getElementById(id);
+                this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+                this.cells = [];
+                this.arteries = [];
+            }
+
+            start() {
+                if (!this.ctx) return;
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                setInterval(() => this.spawnCell(), 120);
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+                this.defineArteries();
+            }
+
+            defineArteries() {
+                const w = this.canvas.width, h = this.canvas.height;
+                this.arteries = [
+                    { p0:{x:0,y:h*0.5}, p1:{x:w*0.3,y:h*0.1}, p2:{x:w*0.6,y:h*0.9}, p3:{x:w,y:h*0.5}, color:'rgba(255, 45, 117, 0.9)' },
+                    { p0:{x:0,y:h*0.8}, p1:{x:w*0.4,y:h*0.3}, p2:{x:w*0.8,y:h*1.2}, p3:{x:w,y:h*0.2}, color:'rgba(0, 229, 255, 0.7)' },
+                    { p0:{x:0,y:h*0.2}, p1:{x:w*0.5,y:h*0.9}, p2:{x:w*0.8,y:-20}, p3:{x:w,y:h*0.8}, color:'rgba(178, 75, 243, 0.7)' },
+                    { p0:{x:0,y:h*0.6}, p1:{x:w*0.2,y:h*1.1}, p2:{x:w*0.9,y:-0.1}, p3:{x:w,y:h*0.4}, color:'rgba(0, 230, 118, 0.8)' }
+                ];
+            }
+
+            spawnCell() {
+                this.cells.push({
+                    artery: this.arteries[Math.floor(Math.random() * this.arteries.length)],
+                    t: 0, 
+                    speed: 0.001 + Math.random() * 0.004, 
+                    size: 2 + Math.random() * 4
+                });
+            }
+
+            getBezier(p0, p1, p2, p3, t) {
+                const u = 1 - t;
+                return {
+                    x: u*u*u*p0.x + 3*u*u*t*p1.x + 3*u*t*t*p2.x + t*t*t*p3.x,
+                    y: u*u*u*p0.y + 3*u*u*t*p1.y + 3*u*t*t*p2.y + t*t*t*p3.y
+                };
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw Arterial Walls
+                this.arteries.forEach(a => {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(a.p0.x, a.p0.y);
+                    this.ctx.bezierCurveTo(a.p1.x, a.p1.y, a.p2.x, a.p2.y, a.p3.x, a.p3.y);
+                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+                    this.ctx.lineWidth = 15;
+                    this.ctx.stroke();
+                });
+
+                // Process and Draw Blood Cells
+                this.cells = this.cells.filter(c => {
+                    c.t += c.speed;
+                    if (c.t >= 1) return false; // Cell exits system
+                    
+                    const pos = this.getBezier(c.artery.p0, c.artery.p1, c.artery.p2, c.artery.p3, c.t);
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(pos.x, pos.y, c.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = c.artery.color;
+                    this.ctx.shadowBlur = 15;
+                    this.ctx.shadowColor = c.artery.color;
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0; // Reset shadow state to prevent performance hits
+                    return true;
+                });
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        /**
+         * 3. CELL MITOSIS: Cellular Division State Machine
+         * Animates a cell resting, splitting via mitosis, and separating into two distinct cells.
+         */
+        class CellMitosis {
+            constructor(id) {
+                this.canvas = document.getElementById(id);
+                this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+                this.cellA = { x: 0, y: 0, radius: 60, targetX: 0 };
+                this.cellB = null;
+                this.phase = 'idle'; // States: idle, splitting, separated
+                this.timer = 0;
+            }
+
+            start() {
+                if (!this.ctx) return;
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+                this.cellA.x = this.canvas.width / 2;
+                this.cellA.y = this.canvas.height / 2;
+                this.cellA.targetX = this.canvas.width / 2;
+                if(this.cellB) this.reset();
+            }
+
+            reset() {
+                this.cellB = null;
+                this.cellA.x = this.canvas.width / 2;
+                this.cellA.targetX = this.canvas.width / 2;
+                this.phase = 'idle';
+                this.cellA.radius = 60;
+                this.timer = 0;
+            }
+
+            drawCell(c) {
+                // Lipid Bilayer (Membrane)
+                this.ctx.beginPath();
+                this.ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
+                this.ctx.fillStyle = 'rgba(0, 230, 118, 0.05)';
+                this.ctx.fill();
+                this.ctx.strokeStyle = 'rgba(0, 230, 118, 0.4)';
+                this.ctx.lineWidth = 2;
+                this.ctx.stroke();
+                
+                // Nucleus
+                this.ctx.beginPath();
+                this.ctx.arc(c.x, c.y, c.radius * 0.4, 0, Math.PI * 2);
+                this.ctx.fillStyle = 'rgba(178, 75, 243, 0.2)';
+                this.ctx.fill();
+                this.ctx.strokeStyle = 'rgba(178, 75, 243, 0.6)';
+                this.ctx.stroke();
+
+                // Mitochondria (Powerhouses)
+                for(let i=0; i<5; i++) {
+                    const angle = (Math.PI * 2 / 5) * i;
+                    const dist = c.radius * 0.65;
+                    this.ctx.beginPath();
+                    this.ctx.arc(c.x + Math.cos(angle)*dist, c.y + Math.sin(angle)*dist, 3, 0, Math.PI*2);
+                    this.ctx.fillStyle = 'rgba(255, 171, 0, 0.6)';
+                    this.ctx.fill();
+                }
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.timer++;
+
+                // State Machine Logic for Cell Cycle
+                if (this.phase === 'idle' && this.timer > 150) {
+                    this.phase = 'splitting';
+                    this.timer = 0;
+                }
+
+                if (this.phase === 'splitting') {
+                    this.cellA.targetX = this.canvas.width / 2 - 80;
+                    if (!this.cellB) {
+                        this.cellB = { x: this.canvas.width / 2, y: this.canvas.height / 2, radius: 10 };
+                    }
+                    this.cellB.x += (this.canvas.width / 2 + 80 - this.cellB.x) * 0.05;
+                    this.cellB.radius += (60 - this.cellB.radius) * 0.05;
+                    
+                    if (Math.abs(this.cellA.x - this.cellA.targetX) < 2 && this.cellB.radius > 55) {
+                        this.phase = 'separated';
+                        this.timer = 0;
+                    }
+                }
+
+                if (this.phase === 'separated' && this.timer > 200) {
+                    this.reset();
+                }
+
+                // Smooth easing towards target X
+                this.cellA.x += (this.cellA.targetX - this.cellA.x) * 0.05;
+
+                // Draw tethering chromosome fibers during split
+                if (this.phase === 'splitting' && this.cellB) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.cellA.x + this.cellA.radius, this.cellA.y);
+                    this.ctx.lineTo(this.cellB.x - this.cellB.radius, this.cellB.y);
+                    this.ctx.strokeStyle = 'rgba(0, 230, 118, 0.3)';
+                    this.ctx.lineWidth = 4;
+                    this.ctx.stroke();
+                    this.drawCell(this.cellB);
+                }
+
+                if (this.phase === 'separated' && this.cellB) {
+                    this.drawCell(this.cellB);
+                }
+
+                this.drawCell(this.cellA);
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        /**
+         * 4. NEURAL SYNAPSE: Vesicular Transport & Neurotransmitter Release
+         * Simulates pre-synaptic vesicles moving to the edge, bursting, and sending
+         * neurotransmitter particles across the synaptic cleft to the post-synaptic neuron.
+         */
+        class NeuralSynapse {
+            constructor(id) {
+                this.canvas = document.getElementById(id);
+                this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+                this.neuronA = {};
+                this.neuronB = {};
+                this.vesicles = [];
+                this.neurotransmitters = [];
+                this.receptorGlow = 0;
+            }
+
+            start() {
+                if (!this.ctx) return;
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                setInterval(() => this.fireVesicle(), 900);
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+                this.neuronA = { x: this.canvas.width * 0.2, y: this.canvas.height / 2, radius: 40 };
+                this.neuronB = { x: this.canvas.width * 0.8, y: this.canvas.height / 2, radius: 40 };
+            }
+
+            fireVesicle() {
+                this.vesicles.push({ 
+                    x: this.neuronA.x, 
+                    y: this.neuronA.y, 
+                    targetX: this.neuronA.x + this.neuronA.radius + 10,
+                    launched: false 
+                });
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                const w = this.canvas.width;
+                const h = this.canvas.height;
+
+                // Draw Synaptic Cleft Background Void
+                const cleftStart = this.neuronA.x + this.neuronA.radius + 10;
+                const cleftEnd = this.neuronB.x - this.neuronB.radius - 10;
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+                this.ctx.fillRect(cleftStart, 0, cleftEnd - cleftStart, h);
+                
+                this.ctx.fillStyle = 'rgba(255,255,255,0.06)';
+                this.ctx.font = '10px JetBrains Mono';
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText("SYNAPTIC CLEFT", w/2, 30);
+
+                // Process Vesicle Transport
+                this.vesicles = this.vesicles.filter(v => {
+                    if (!v.launched) {
+                        v.x += 2; // Move vesicle along cytoskeleton
+                        if (v.x >= v.targetX) {
+                            v.launched = true;
+                            // Exocytosis: Release neurotransmitters into cleft
+                            for(let i=0; i<8; i++) {
+                                this.neurotransmitters.push({
+                                    x: v.x, y: v.y + (Math.random()-0.5)*20,
+                                    vx: 3 + Math.random()*3, 
+                                    vy: (Math.random()-0.5)*2
+                                });
+                            }
+                        }
+                        // Draw Vesicle
+                        this.ctx.beginPath();
+                        this.ctx.arc(v.x, v.y, 5, 0, Math.PI*2);
+                        this.ctx.fillStyle = 'rgba(255, 171, 0, 0.8)';
+                        this.ctx.fill();
+                        return true;
+                    }
+                    return false; // Destroy vesicle post-fusion
+                });
+
+                // Process Neurotransmitter Flight
+                this.neurotransmitters = this.neurotransmitters.filter(nt => {
+                    nt.x += nt.vx;
+                    nt.y += nt.vy;
+                    
+                    // Check for receptor binding
+                    if (nt.x > this.neuronB.x - this.neuronB.radius) {
+                        this.receptorGlow = 1; // Trigger action potential
+                        return false; 
+                    }
+
+                    // Draw Neurotransmitter Molecule
+                    this.ctx.beginPath();
+                    this.ctx.arc(nt.x, nt.y, 2.5, 0, Math.PI*2);
+                    this.ctx.fillStyle = 'rgba(0, 229, 255, 0.9)';
+                    this.ctx.shadowBlur = 10;
+                    this.ctx.shadowColor = 'rgba(0, 229, 255, 0.8)';
+                    this.ctx.fill();
+                    this.ctx.shadowBlur = 0;
+                    return true;
+                });
+
+                // Draw Neurons
+                const drawNeuron = (n, label) => {
+                    // Glow effect if receiving signal
+                    if (n === this.neuronB && this.receptorGlow > 0) {
+                        this.ctx.beginPath();
+                        this.ctx.arc(n.x, n.y, n.radius + 10, 0, Math.PI * 2);
+                        this.ctx.fillStyle = `rgba(0, 229, 255, ${this.receptorGlow * 0.2})`;
+                        this.ctx.fill();
+                        this.receptorGlow -= 0.02; // Decay glow
+                    }
+
+                    // Cell Body
+                    this.ctx.beginPath();
+                    this.ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = 'rgba(178, 75, 243, 0.1)';
+                    this.ctx.fill();
+                    this.ctx.strokeStyle = 'rgba(178, 75, 243, 0.5)';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.stroke();
+                    
+                    // Label
+                    this.ctx.fillStyle = '#fff';
+                    this.ctx.font = '12px Inter';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText(label, n.x, n.y + 4);
+                };
+
+                drawNeuron(this.neuronA, "PRE");
+                drawNeuron(this.neuronB, "POST");
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize the Master Bio-Digital System
+        const BioSystem = new HelacoreBioMaster();
+
+    </script>
+</body>
+</html>
